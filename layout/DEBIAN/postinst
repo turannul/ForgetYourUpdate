@@ -1,23 +1,7 @@
 #!/bin/bash
-errmsg="$(tput setaf 1)[!!]: Oops! Something went wrong and we're unable to complete your request at this time. Please try rebooting your device by performing a userspace reboot and try again. If the issue persists, please contact me for further assistance.$(tput sgr0)"
-sleep 0.5
-if launchctl unload -w /System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist; then
-    echo "[1/3] softwareupdated is unloaded."
-else
-    echo -e "$errmsg"
-fi
-sleep 0.5
-if launchctl unload -w /System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist; then
-    echo "[2/3] softwareupdateservicesd is unloaded."
-else
-    echo -e "$errmsg"
-fi
-sleep 0.5
-if launchctl unload -w /System/Library/LaunchDaemons/com.apple.OTATaskingAgent.plist; then
-    echo "[3/3] OTATaskingAgent is unloaded."
-else
-    echo -e "$errmsg"
-fi
-sleep 0.5
-echo -e "What is an update I forgot.\n[i]: All done.\n[i]: No respring required."
-killall -9 Preferences softwareupdated softwareupdateservicesd OTATaskingAgent 2>/dev/null #Supress "No matching processes belonging to you were found" error
+errmsg="$(tput setaf 1)[!!]: Oops! Something went wrong.\nPlease try rebooting your device or performing a userspace reboot and try again. 
+\nIf the issue persists, please contact me for further assistance.$(tput sgr0)"
+launchctl unload -w /System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist && echo "[1/3] Software Updated Daemon is unloaded." || echo -e "$errmsg" ; sleep 0.5
+launchctl unload -w /System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist && echo "[2/3] Software Update Services Daemon is unloaded." || echo -e "$errmsg" ; sleep 0.5
+launchctl unload -w /System/Library/LaunchDaemons/com.apple.OTATaskingAgent.plist && echo "[3/3] OTATaskingAgent Daemon is unloaded." || echo -e "$errmsg" ; sleep 0.5
+echo -e "What is an update I forgot.\n[i]: All done.\n[i]: No respring required, but you can if you want to."
