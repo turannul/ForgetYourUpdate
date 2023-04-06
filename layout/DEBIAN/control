@@ -1,0 +1,12 @@
+Package: xyz.turannul.forgetyourupdates
+Section: Tweaks
+Maintainer: Turann_
+Architecture: iphoneos-arm
+Version: 1.1~(3)
+Depends: preferenceloader, mobilesubstrate, bash, launchctl
+Replaces: xyz.turannul.updateblockr
+Description: Features:
+ Disable updates, Removes Software Update preference in Settings/General.
+ Now open source, you can find the codes here > https://github.com/turannul/ForgetYourUpdate
+Name: Forget Your Update
+Author: Turann_
