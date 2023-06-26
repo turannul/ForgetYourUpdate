@@ -10,4 +10,4 @@ This tweak is released under the [MIT License](https://opensource.org/licenses/M
 
 If you have any questions or issues with tweak, hit me up on issues.
 
-[![Build status](https://github.com/turannul/ForgetYourUpdate/actions/workflows/Build.yml/badge.svg?branch=master)](https://github.com/turannul/ForgetYourUpdate/actions/workflows/Build.yml)
+[![Build status](https://github.com/turannul/ForgetYourUpdate/actions/workflows/Build.yml/badge.svg)](https://github.com/turannul/ForgetYourUpdate/actions/workflows/Build.yml)
