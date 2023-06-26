@@ -1,4 +1,4 @@
-name: Build Tweak
+name: Build status
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
           path: theos
           submodules: recursive
 
-      - name: Build-Stock
+      - name: Build Tweak
         run: |
           source .env
           make package
