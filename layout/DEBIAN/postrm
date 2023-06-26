@@ -1,7 +1,22 @@
-#!/bin/bash
-errmsg="$(tput setaf 1)[!!]: Oops! Something went wrong.\nPlease try rebooting your device or performing a userspace reboot and try again. 
-\nIf the issue persists, please contact me for further assistance.$(tput sgr0)"
-launchctl load -w /System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist && echo "[1/3] Software Updated Daemon is loaded." || echo -e "$errmsg" ; sleep 0.5
-launchctl load -w /System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist && echo "[2/3] Software Update Services Daemon is loaded." || echo -e "$errmsg" ; sleep 0.5
-launchctl load -w /System/Library/LaunchDaemons/com.apple.OTATaskingAgent.plist && echo "[3/3] OTATaskingAgent Daemon is loaded." || echo "$errmsg" ; sleep 0.5
-echo -e "Ahh! now i remember what update is.\n[i]: All done.\n[i]: No respring required, but you can if you want to."
+#!/bin/sh
+
+softwareupdated_plist="/System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist"
+softwareupdateservicesd_plist="/System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist"
+OTATaskingAgent_plist="/System/Library/LaunchDaemons/com.apple.OTATaskingAgent.plist"
+
+errmsg="[!!]: Oops! Something went wrong.
+Please try rebooting your device or performing a userspace reboot and try again. 
+If the issue persists, please contact me for further assistance."
+
+load_plist() {
+    launchctl load -w "$1" && echo "[*] $2 Daemon is loaded." || echo -e "$errmsg"
+    sleep 0.5
+}
+
+load_plist "$softwareupdated_plist" "softwareupdated"
+load_plist "$softwareupdateservicesd_plist" "Software Update Service"
+load_plist "$OTATaskingAgent_plist" "OTATaskingAgent"
+
+echo -e "Ahh! now I remember what update is.
+[i]: All done.
+[i]: No respring required, but you can if you want to."
