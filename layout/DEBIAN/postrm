@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 softwareupdated_plist="/System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist"
 softwareupdateservicesd_plist="/System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist"
