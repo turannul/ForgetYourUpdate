@@ -3,7 +3,7 @@ name: Build Tweak
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
