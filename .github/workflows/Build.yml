@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Installing homebrew and make,dpkg & ldid #Installing make >> https://theos.dev/docs/parallel-building <<
+        run: |
+            printf "\033[33m ==>\033[0m Downloading and installing Homebrew\n" && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null 2>&1 && printf "\033[32m ==>\033[0m Homebrew successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)\n"
+            printf "\033[33m ==>\033[0m Downloading and installing make\n" && brew install make && echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env && printf "\033[32m ==>\033[0m make successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)"
+            printf "\033[33m ==>\033[0m Downloading and installing dpkg\n" && brew install dpkg && printf "\033[32m ==>\033[0m dpkg successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)"
+            printf "\033[33m ==>\033[0m Downloading and installing ldid\n" && brew install ldid && printf "\033[32m ==>\033[0m ldid successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)"
+            echo "export THEOS=${{ github.workspace }}/theos" >> .env
+
+      - name: Install Theos
+        uses: actions/checkout@v3
+        with:
+          repository: theos/theos
+          path: theos
+          submodules: recursive
+#/Users/runner/work/ForgetYourUpdate/ForgetYourUpdate/Packages/*.deb 
+      - name: Build-Stock
+        run: |
+          source .env
+          make package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ForgetYourUpdate
+          path: |
+            /Users/runner/work/ForgetYourUpdate/ForgetYourUpdate/Packages/*.deb
