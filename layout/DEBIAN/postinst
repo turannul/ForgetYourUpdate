@@ -1,26 +1,31 @@
 #!/bin/bash
 
-softwareupdated_plist="/System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist"
-softwareupdateservicesd_plist="/System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist"
-OTATaskingAgent_plist="/System/Library/LaunchDaemons/com.apple.OTATaskingAgent.plist"
+plist_paths=(
+  "/System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist"
+  "/System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist"
+  "/System/Library/LaunchDaemons/com.apple.OTATaskingAgent.plist"
+)
 
-errmsg="[!!]: Oops! Something went wrong.
+errmsg="[!] Oops! Something went wrong.
 Please try rebooting your device or performing a userspace reboot and try again. 
 If the issue persists, please contact me for further assistance."
 
-load_plist() {
-    launchctl unload -w "$1" && echo "[*] $2 Daemon is loaded." || echo -e "$errmsg"
-    sleep 0.5
+success_msg="[i] All done.
+[i]: No respring required, but you can if you want to."
+
+unload_plist() {
+    launchctl unload -w "$1" && echo "[*] $2 Daemon is unloaded." || echo -e "$errmsg"
 }
 
-load_plist "$softwareupdated_plist" "softwareupdated"
-load_plist "$softwareupdateservicesd_plist" "Software Update Service"
-load_plist "$OTATaskingAgent_plist" "OTATaskingAgent"
+error=false
 
-echo -e "Ahh! now I remember what update is.
-[i]: All done.
-[i]: No respring required, but you can if you want to."
+for plist_path in "${plist_paths[@]}"; do
+    daemon_name=$(basename "$plist_path" | sed 's/.plist//')
+    unload_plist "$plist_path" "$daemon_name" || error=true
+done
 
-echo -e "What is an update I forgot.
-[i]: All done.
-[i]: No respring required, but you can if you want to."
+if [[ "$error" = false ]]; then
+        echo "$success_msg"
+    else
+        echo "$errmsg"
+fi
