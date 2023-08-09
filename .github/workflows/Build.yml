@@ -15,10 +15,10 @@ jobs:
 
       - name: Installing Homebrew and make, dpkg & ldid
         run: |
-          printf "\033[33m ==>\033[0m Downloading and installing Homebrew\n" && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null 2>&1 && printf "\033[32m ==>\033[0m Homebrew successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)\n"
-          printf "\033[33m ==>\033[0m Downloading and installing make\n" && brew install make && echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env && printf "\033[32m ==>\033[0m make successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)"
-          printf "\033[33m ==>\033[0m Downloading and installing dpkg\n" && brew install dpkg && printf "\033[32m ==>\033[0m dpkg successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)"
-          printf "\033[33m ==>\033[0m Downloading and installing ldid\n" && brew install ldid && printf "\033[32m ==>\033[0m ldid successfully installed\n" || printf "\033[31m ==>\033[0m Oops! something goes wrong. (check logs for details)"
+          printf "\033[33m==>\033[0m Downloading and installing Homebrew\n" && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null 2>&1 && printf "\033[32m==>\033[0m Homebrew successfully installed\n" || printf "\033[31m==>\033[0m Oops! something goes wrong. (check logs for details)\n"
+          printf "\033[33m==>\033[0m Downloading and installing make\n" && brew install make && echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env && printf "\033[32m==>\033[0m make successfully installed\n" || printf "\033[31m==>\033[0m Oops! something goes wrong. (check logs for details)"
+          printf "\033[33m==>\033[0m Downloading and installing dpkg\n" && brew install dpkg && printf "\033[32m==>\033[0m dpkg successfully installed\n" || printf "\033[31m==>\033[0m Oops! something goes wrong. (check logs for details)"
+          printf "\033[33m==>\033[0m Downloading and installing ldid\n" && brew install ldid && printf "\033[32m==>\033[0m ldid successfully installed\n" || printf "\033[31m==>\033[0m Oops! something goes wrong. (check logs for details)"
           echo "export THEOS=${{ github.workspace }}/theos" >> .env
 
       - name: Install Theos
@@ -33,6 +33,7 @@ jobs:
           source .env
           cd rootful/
           make package
+
       - name: Build Rootless Tweak
         run: |
             source .env
@@ -42,7 +43,13 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: debs [DOWNLOAD HERE]
+          name: Rootful Deb
           path: |
             /Users/runner/work/ForgetYourUpdate/ForgetYourUpdate/rootful/Packages/*.deb
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Rootless Deb
+          path: |
             /Users/runner/work/ForgetYourUpdate/ForgetYourUpdate/rootless/Packages/*.deb
