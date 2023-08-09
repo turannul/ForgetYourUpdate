@@ -11,5 +11,5 @@ include $(THEOS_MAKE_PATH)/tweak.mk
 
 c:
 	find . -name ".DS_Store" -delete
-	rm -rfv .theos/
+	rm -rfv .theos/ build/ Packages/
 #Clean up using 'make c'
