@@ -28,14 +28,21 @@ jobs:
           path: theos
           submodules: recursive
 
-      - name: Build Tweak
+      - name: Build Rootful Tweak
         run: |
           source .env
+          cd rootful/
           make package
+      - name: Build Rootless Tweak
+        run: |
+            source .env
+            cd rootless/
+            make package
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ForgetYourUpdate
+          name: debs [DOWNLOAD HERE]
           path: |
-            /Users/runner/work/ForgetYourUpdate/ForgetYourUpdate/Packages/*.deb
+            /Users/runner/work/ForgetYourUpdate/ForgetYourUpdate/rootful/Packages/*.deb
+            /Users/runner/work/ForgetYourUpdate/ForgetYourUpdate/rootless/Packages/*.deb

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+plist_paths=(
+  "/System/Library/LaunchDaemons/com.apple.mobile.softwareupdated.plist"
+  "/System/Library/LaunchDaemons/com.apple.softwareupdateservicesd.plist"
+  "/System/Library/LaunchDaemons/com.apple.OTATaskingAgent.plist"
+)
+
+errmsg="[!] Oops! Something went wrong.
+Please try rebooting your device or performing a userspace reboot and try again. 
+If the issue persists, please contact me for further assistance."
+
+success_msg="[i] All done.
+[i]: No respring required, but you can if you want to."
+
+load_plist() {
+    launchctl unload -w "$1" && echo "[*] $2 Daemon is loaded." || echo -e "$errmsg"
+}
+
+error=false
+
+for plist_path in "${plist_paths[@]}"; do
+    daemon_name=$(basename "$plist_path" | sed 's/.plist//')
+    load_plist "$plist_path" "$daemon_name" || error=true
+done
+
+if [[ "$error" = false ]]; then
+        echo "$success_msg"
+    else
+        echo "$errmsg"
+fi
