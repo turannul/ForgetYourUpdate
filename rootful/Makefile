@@ -2,6 +2,8 @@ ARCHS = arm64 arm64e
 
 INSTALL_TARGET_PROCESSES = Preferences
 
+export FINALPACKAGE=1
+
 TWEAK_NAME = ForgetYourUpdate
 $(TWEAK_NAME)_FILES = ForgetYourUpdate.xm
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc
