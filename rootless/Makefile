@@ -1,6 +1,6 @@
 ARCHS = arm64 arm64e
 THEOS_PACKAGE_SCHEME = rootless
-
+export FINALPACKAGE=1
 INSTALL_TARGET_PROCESSES = Preferences
 
 TWEAK_NAME = ForgetYourUpdate
