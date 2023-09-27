@@ -1,11 +1,11 @@
-ARCHS = arm64 arm64e
+export FINALPACKAGE=1
+export ARCHS = arm64 arm64e
 
 INSTALL_TARGET_PROCESSES = Preferences
-
-export FINALPACKAGE=1
-
 TWEAK_NAME = ForgetYourUpdate
-$(TWEAK_NAME)_FILES = ForgetYourUpdate.xm
+
+$(TWEAK_NAME)_FILES = ForgetYourUpdate.xm updatek1ller.mm
+$(TWEAK_NAME)_LIBRARIES = MobileGestalt
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc
 
 include $(THEOS)/makefiles/common.mk
