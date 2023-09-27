@@ -1,9 +1,9 @@
 Package: xyz.turannul.forgetyourupdate
 Section: Tweaks
 Maintainer: Turann_
-Architecture: iphoneos-arm
-Version: 1.3
-Depends: preferenceloader, mobilesubstrate, bash, launchctl
+Architecture: iphoneos-arm64
+Version: 1.5
+Depends: preferenceloader, mobilesubstrate, bash, launchctl, firmware (>= 15.0)
 Replaces: xyz.turannul.updateblockr, xyz.turannul.forgetyourupdates
 Conflict: xyz.turannul.updateblockr, xyz.turannul.forgetyourupdates
 Description:
